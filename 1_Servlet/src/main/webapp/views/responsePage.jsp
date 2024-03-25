@@ -8,8 +8,7 @@
 </head>
 <body>
 	<% 
-		// 스크립틀릿(scriptlet) == html문서 내에서 자바코드를 쓸 수 있는 영역
-		
+		// 스크립틀릿(scriptlet) == html문서 내에서 자바코드를 쓸 수 있는 영역		
 		String name = (String)request.getAttribute("name");
 	%>
 	

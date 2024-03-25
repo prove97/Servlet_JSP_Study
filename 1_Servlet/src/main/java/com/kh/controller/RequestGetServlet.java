@@ -114,9 +114,7 @@ public class RequestGetServlet extends HttpServlet {
 		}
 		
 		out.println("</body>");
-		
 		out.println("</html>");
-		
 		
 		
 	}
