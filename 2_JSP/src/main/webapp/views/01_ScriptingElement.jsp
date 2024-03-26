@@ -37,9 +37,8 @@
         <h4>반복문을 통해서 html요소 반복적으로 화면에 출력할 수 있다.</h4>
         
         <ul>
-        	<%
-        		for(String name : nameArr){%>
-        			<li><%=name%></li>
+        	<%for(String name : nameArr){%>
+        		<li><%=name%></li>
         	<%}%>
         </ul>
         

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class PizzaServlet
  */
-@WebServlet("/confirmPizza.do")
+@WebServlet("/confirmPizza.do") // Mapping
 public class PizzaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
