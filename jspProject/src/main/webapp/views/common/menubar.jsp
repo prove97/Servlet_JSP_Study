@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.kh.member.model.vo.Member" %>
 <% 
 	String contextPath = request.getContextPath();
+
+    Member loginUser = (Member)session.getAttribute("loginUser");
+    // 로그인 시도 전 menubar.jsp 로딩시 : null
+    // 로그인 성공 menubar.jsp 로딩시 : 로그인 성공한 회원의 정보    
+    
+    String alertMsg = (String)session.getAttribute("alertMsg"); 
+    // 서비스 요청 전 : null
+    // 서비스 요청 후 : alert 띄워줄 메세지 문구
+    
 %>    
     
     <!DOCTYPE html>
@@ -30,6 +40,10 @@
             .login-area>* {
                 float: right;
             }
+            
+            .login-area a{
+            	color: black;
+            }
 
             .nav-area{
                 background: black;
@@ -56,9 +70,15 @@
     </head>
 
     <body>
-        
+    <% if(alertMsg != null) {%>
+    	<script>
+    		alert("<%=alertMsg%>");
+    	</script>
+    	<% session.removeAttribute("alertMsg"); %>
+    <% } %>	
         <h1 align="center">Welcome KH World</h1>
         <div class="login-area">
+        <% if(loginUser == null) { %>
         <!-- 로그인 전 -->
             <form action="<%=contextPath%>/login.me" method="POST">
                 <table>
@@ -73,21 +93,33 @@
                     <tr>
                         <th colspan="2">
                             <input class="btn" type="submit" value="로그인">
-                            <input type="button" value="회원가입">
+                            <input type="button" value="회원가입" onclick="enrollPage();">
                         </th>        
                     </tr>
                 </table>
+                <script>
+                    // 회원가입 페이지를 요청
+                    function enrollPage(){                        
+                    	//location.href = "<%=contextPath%>/views/member/memberEnrollForm.jsp";
+                    	//웹 애플리케이션의 디렉토리 구조가 url에 노출되면 보안에 취약
+                    	
+                        location.href = "<%=contextPath%>/enrollForm.me";
+                        // 단순한 페이지 요청도 servlet을 거쳐갈 것(즉,url에는 서블릿 맵핑값만 나타나도록)
+                    }
+                </script>
             </form>
+        <% } else { %>
+        <!-- 로그인 후 -->
+	        <div>
+	            <b><%=loginUser.getUserName()%></b>의 방문을 환영합니다 <br><br>
+	            <div>
+	                <a href="">마이페이지</a>
+	                <a href="<%=contextPath%>/logout.me">로그아웃</a>                
+	            </div>
+	        </div> 
+        <% } %>
         </div>
-
-        <!-- 로그인 후
-        <div>
-            <b>최지원님</b>의 방문을 환영합니다 <br><br>
-            <div>
-                <a href="마이페이지"></a>
-                <a href="로그아웃"></a>                
-            </div>
-        </div> -->
+        
 
         <br clear="both"><br>
 
