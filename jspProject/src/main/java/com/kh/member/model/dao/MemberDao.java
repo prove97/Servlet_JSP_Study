@@ -84,7 +84,6 @@ public class MemberDao {
 			pstmt.setString(7, m.getInterest());
 			
 			result = pstmt.executeUpdate();
-			System.out.println("result : " + result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -92,5 +91,92 @@ public class MemberDao {
 		}
 		
 		return result;
+	}
+	
+	public int updateMember(Connection conn, Member m) {
+		//update -> 업데이트된 행수가 반환 => 트랜잭션처리
+		int result = 0;
+		
+		PreparedStatement pstmt = null;		
+		String sql = prop.getProperty("UpdateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql); //미완성된 sql
+			pstmt.setString(1, m.getUserName());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getAddress());
+			pstmt.setString(5, m.getInterest());
+			pstmt.setString(6, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public Member selectMember(Connection conn, String userId) {
+		//select -> resultset(한행) -> Member객체에 담음
+		
+		Member m = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("SelectMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(
+						rset.getInt("user_no"),
+						rset.getString("user_id"),
+						rset.getString("user_pwd"),
+						rset.getString("user_name"),
+						rset.getString("phone"),
+						rset.getString("email"),
+						rset.getString("address"),
+						rset.getString("interest"),
+						rset.getDate("enroll_date"),
+						rset.getDate("modify_date"),
+						rset.getString("status"));								
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+	}
+	
+	public int changePwd(Connection conn, String userId, String userPwd, String updatePwd) {
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("ChangePwd");	
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql); //미완성된 sql
+			pstmt.setString(1, updatePwd);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userPwd);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
 	}
 }

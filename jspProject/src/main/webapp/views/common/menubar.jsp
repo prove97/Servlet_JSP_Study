@@ -113,7 +113,7 @@
 	        <div>
 	            <b><%=loginUser.getUserName()%></b>의 방문을 환영합니다 <br><br>
 	            <div>
-	                <a href="">마이페이지</a>
+	                <a href="<%=contextPath%>/myPage.me">마이페이지</a>
 	                <a href="<%=contextPath%>/logout.me">로그아웃</a>                
 	            </div>
 	        </div> 
@@ -124,8 +124,8 @@
         <br clear="both"><br>
 
         <div class="nav-area" align="center">
-            <div class="menu"><a href="">HOME</a></div>
-            <div class="menu"><a href="">공지사항</a></div>
+            <div class="menu"><a href="<%=contextPath%>">HOME</a></div>
+            <div class="menu"><a href="<%=contextPath%>/list.no">공지사항</a></div>
             <div class="menu"><a href="">일반게시판</a></div>
             <div class="menu"><a href="">사진게시판</a></div>
         </div>
