@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
     import="com.kh.notice.model.vo.Notice" %>
-    <% Notice n=(Notice)request.getAttribute("notice"); %>
+<% Notice n=(Notice)request.getAttribute("notice"); %>
 <!DOCTYPE html>
 <html>
 
@@ -57,9 +57,12 @@
             </table>
             <br><br>
             <div>
-              <a href="">목록가기</a>
-              <a href="">수정하기</a>
-              <a href="">삭제하기</a>
+              <a href="<%=contextPath %>/list.no" class="btn btn-sm btn-secondary">목록가기</a>
+              <%if(loginUser != null && loginUser.getUserId().equals("admin")) {%>
+	              <!-- 현재 로그인한 사용자가 해당 글을 쓴 보인일떄만 -->
+	              <a href="<%=contextPath %>/updateForm.no?num=<%=n.getNoticeNo() %>" class="btn btn-sm btn-warning">수정하기</a>
+	              <a href="<%=contextPath %>/delete.no?num=<%=n.getNoticeNo() %>" class="btn btn-sm btn-danger">삭제하기</a>
+              <%} %>
             </div>
         </div>
 </body>

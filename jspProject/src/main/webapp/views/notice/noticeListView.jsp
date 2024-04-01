@@ -60,7 +60,7 @@
                 <% } else {%>
                     <!--공지사항이 있을 경우-->
                     <% for(Notice n : list) { %>
-                        <tr >
+                        <tr> <!-- onclick this사용 -->
                             <td><%=n.getNoticeNo()%></td>
                             <td><%=n.getNoticeTitle()%></td>
                             <td><%=n.getNoticeWriter()%></td>
