@@ -5,20 +5,50 @@ import java.sql.Date;
 public class Board {
 	private int boardNo;
 	private int boardType;
-	private int categoryNo; // 작성기능 사용시 => 카테고리 번호 | 조회 카테고리명
+	private String category; // 작성기능 사용시 => 카테고리 번호 | 조회 카테고리명
 	private String boardTitle;
 	private String boardContent;
 	private String boardWriter; // 작성기능시 회원번호 | 조회기능 회원아이디
 	private int count;
 	private String createDate;
 	private String status;
+		
 	
-	public Board(int boardNo, int boardType, int categoryNo, String boardTitle, String boardContent, String boardWriter,
-			int count, String createDate, String status) {
+	public Board() {
+		super();
+	}
+
+	
+
+	public Board(int boardNo, String category, String boardTitle, String boardContent, String boardWriter,
+			String createDate) {
+		super();
+		this.boardNo = boardNo;
+		this.category = category;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardWriter = boardWriter;
+		this.createDate = createDate;
+	}
+
+
+
+	public Board(int boardNo, String category, String boardTitle, String boardWriter, int count, String createDate) {
+		super();
+		this.boardNo = boardNo;
+		this.category = category;
+		this.boardTitle = boardTitle;
+		this.boardWriter = boardWriter;
+		this.count = count;
+		this.createDate = createDate;
+	}
+
+	public Board(int boardNo, int boardType, String category, String boardTitle, String boardContent,
+			String boardWriter, int count, String createDate, String status) {
 		super();
 		this.boardNo = boardNo;
 		this.boardType = boardType;
-		this.categoryNo = categoryNo;
+		this.category = category;
 		this.boardTitle = boardTitle;
 		this.boardContent = boardContent;
 		this.boardWriter = boardWriter;
@@ -26,7 +56,8 @@ public class Board {
 		this.createDate = createDate;
 		this.status = status;
 	}
-	
+
+
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -43,14 +74,19 @@ public class Board {
 		this.boardType = boardType;
 	}
 	
-	public int getCategoryNo() {
-		return categoryNo;
+
+	public String getCategory() {
+		return category;
 	}
-	
-	public void setCategoryNo(int categoryNo) {
-		this.categoryNo = categoryNo;
+
+
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
-	
+
+
+
 	public String getBoardTitle() {
 		return boardTitle;
 	}
@@ -98,13 +134,17 @@ public class Board {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
+
+
 	@Override
 	public String toString() {
-		return "Board [boardNo=" + boardNo + ", boardType=" + boardType + ", categoryNo=" + categoryNo + ", boardTitle="
+		return "Board [boardNo=" + boardNo + ", boardType=" + boardType + ", category=" + category + ", boardTitle="
 				+ boardTitle + ", boardContent=" + boardContent + ", boardWriter=" + boardWriter + ", count=" + count
 				+ ", createDate=" + createDate + ", status=" + status + "]";
 	}
+	
+
 	
 	
 
