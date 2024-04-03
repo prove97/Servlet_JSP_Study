@@ -1,28 +1,23 @@
 package com.kh.board.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.board.model.vo.Attachment;
-import com.kh.board.model.vo.Board;
-import com.kh.board.service.BoardService;
-
 /**
- * Servlet implementation class BoardDetailController
+ * Servlet implementation class BoardDeleteController
  */
-@WebServlet("/detail.bo")
-public class BoardDetailController extends HttpServlet {
+@WebServlet("/delete.bo")
+public class BoardDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardDetailController() {
+    public BoardDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,26 +26,8 @@ public class BoardDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int boardNo = Integer.parseInt(request.getParameter("bno"));
-		
-		BoardService bService = new BoardService();
-		
-		//조회수 1증가시키고 디테일페이지 보여줄 Board객체
-		Board b = new BoardService().increaseCount(boardNo);
-		
-		if(b != null ) {
-			Attachment at = bService.selectAttachment(boardNo);
-			
-			request.setAttribute("board", b);
-			request.setAttribute("attachment", at);
-			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
-		} else {
-			request.setAttribute("errorMsg", "게시글 조회 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);			
-			
-		}
-		
-	
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

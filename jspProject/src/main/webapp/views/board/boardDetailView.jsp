@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.board.model.vo.Board"%>
-    
+    pageEncoding="UTF-8" import="com.kh.board.model.vo.Board, com.kh.board.model.vo.Attachment"%>
+<!-- Attachment 객체는 common 폴더에 넣는걸 추천 -->    
 <%
 	Board b = (Board)request.getAttribute("board");
 	//글번호, 카테고리명, 제목, 내용, 작성자, 작성일
+	
+	Attachment at = (Attachment)request.getAttribute("attachment");
+	//없을 수도 있다. null
+	//있다면 파일번호, 원본명, 수정명, 저장경로
 %>
 <!DOCTYPE html>
 <html>
@@ -60,12 +64,13 @@
             <tr>
                 <th>첨부파일</th>
                 <td colspan="3">
-                    <!--
-                        case1 첨주파일이 없을때
-                        첨부파일이 없습니다.
-                    -->
-                    <!--case2첨부파일 있을 때-->
-                     <a download="첨부파일1" href="https://www.google.com/imgres?q=%EB%B9%B5%EB%B9%B5%EC%9D%B4&imgurl=https%3A%2F%2Fimage.zdnet.co.kr%2F2023%2F07%2F26%2Ff7981bfffc284d23d6335b1223bd554c.jpg&imgrefurl=https%3A%2F%2Fzdnet.co.kr%2Fview%2F%3Fno%3D20230726144649&docid=Y9uWdIes8zGAMM&tbnid=EE5KD1Eur52l8M&vet=12ahUKEwj0wYG2u6KFAxVZd2wGHbcRDGgQM3oECEcQAA..i&w=557&h=572&hcb=2&ved=2ahUKEwj0wYG2u6KFAxVZd2wGHbcRDGgQM3oECEcQAA">file20230401</a>
+                <%if(at == null){ %>
+                    <!-- case1 첨주파일이 없을때 -->
+                	첨부파일이 없습니다.
+                <%} else{%> 
+                    <!--case2첨부파일 있을 때 8001/kh/resources/board_upfile/-->
+                     <a download="<%=at.getOriginName() %>" href="<%=contextPath%>/<%=at.getFilePath() + at.getChangeName()%>"><%=at.getOriginName() %></a>
+                <%} %>
                 </td>
             </tr>
         </table>
@@ -74,8 +79,8 @@
         <div align="center">
             <a href="<%=contextPath %>/list.bo?cpage=1" class="btn btn-sm btn-secondary">목록가기</a>
             <%if(loginUser != null && loginUser.getUserId().equals(b.getBoardWriter())) { %>
-	            <a href="" class="btn btn-sm btn-warning">수정</a>
-	            <a href="" class="btn btn-sm btn-danger">삭제</a>
+	            <a href="<%=contextPath %>/updateForm.bo?bno=<%=b.getBoardNo() %>" class="btn btn-sm btn-warning">수정하기</a>
+	            <a href="<%=contextPath %>/delete.bo?bno=<%=b.getBoardNo() %>" class="btn btn-sm btn-danger">삭제하기</a>
             <%} %>
         </div>
     </div>
