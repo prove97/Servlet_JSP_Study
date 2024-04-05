@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.kh.board.model.vo.Board"%>
+<%
+    ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+%>
+    <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -9,7 +12,6 @@
     .outer{
         background: black;
         color: white;
-        width: 1000px;
         height: auto;
         margin: auto;
         margin-top: 50px;
@@ -25,7 +27,7 @@
         border: 1px solid white;
         padding: 12px;
         margin: 14px;
-        width: 200px;
+        width: 226px;
     }
 
     .thumbnail:hover{
@@ -35,7 +37,7 @@
 
     .thumbnail p > span{
         display: inline-block;
-        width: 200px;
+        width: 220px;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
@@ -50,55 +52,36 @@
         <br>
         <h2 align="center">사진게시판</h2>
         <br>
+        
+        <% if(loginUser != null){%>
+            <!-- 현재 로그인한 사용자가 관리자일 때-->
+            <div align="right" style="width: 850px; margin:auto; margin-bottom: 4px;">
+                <a href="<%=contextPath %>/enrollForm.th" class="btn btn-sm btn-secondary">글쓰기</a>
+            </div>
+        <%}%>    
 
         <div class="list-area">
+        	<%for(Board b : list) { %>
             <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
+                <input type="hidden" value="<%=b.getBoardNo()%>">
+                <img src="<%=contextPath %>/<%=b.getTitleImg() %>" alt="썸네일" width="200px" height="150px">
                 <p>
-                    <span>No. 125 빵빵이의 하루</span><br>
-                    조회수 : 155
+                    <span>No. <%=b.getBoardNo() %> <%=b.getBoardTitle() %></span><br>
+                    조회수 : <%=b.getCount() %>
                 </p>
             </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span><br>
-                    조회수 : 155
-                </p>
-            </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span><br>
-                    조회수 : 155
-                </p>
-            </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span><br>
-                    조회수 : 155
-                </p>
-            </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span><br>
-                    조회수 : 155
-                </p>
-            </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span><br>
-                    조회수 : 155
-                </p>
-            </div>
-
-           
+            <%} %>
         </div>
 
 
     </div>
+    
+    <script>
+    	$(function(){
+    		$(".thumbnail").click(function(){
+    			location.href = "<%=contextPath%>/detail.th?bno=" + $(this).children().eq(0).val();
+            })
+    	})
+    </script>
 </body>
 </html>
