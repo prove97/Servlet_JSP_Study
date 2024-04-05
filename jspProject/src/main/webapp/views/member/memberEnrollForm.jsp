@@ -133,23 +133,40 @@
              * 
              */
             console.log("ajax 출발")
-
-            $.ajax({
-                type: "GET",
-                url: "idCheck.me",
-                data: {
-                    checkId: idInput.value
-                },
-                success: function(res){
-                    console.log("ajax 응답도착");
-                    console.log("성공 : ", res);
-
-                },
-                error: function(err){
-                    console.log("실패 : ", err);
-                }
-
-            })
+			if(idInput.value.trim() !== ""){
+	            $.ajax({
+	                type: "GET",
+	                url: "idCheck.me",
+	                data: {
+	                    checkId: idInput.value
+	                },
+	                success: function(res){
+	                    console.log("ajax 응답도착");
+	                    console.log("성공 : ", res);
+	                    if(res === "NNNNY"){
+	                    	if(confirm("사용가능한 아이디입니다. 사용하시겠습니까?")){
+	                    		//더 이상 아이디 수정 못하도록, 회원가입 버튼 활성
+	                    		idInput.setAttribute("readonly", true);
+	                    		
+	                    		const submitBtn = document.querySelector("#enroll-form button[type=submit]");	                    		
+	                    		submitBtn.removeAttribute("disabled");
+	                    	} else{
+	                    		//아니라고 한 경우 아이디 입력창 포커싱
+	                    		idInput.focus();
+	                    	}
+	                    } else{
+	                    	alert("사용불가능한 아이디입니다.");
+	                    	idInput.focus();
+	                    }
+	
+	                },
+	                error: function(err){
+	                    console.log("실패 : ", err);
+	                }
+	
+	            })
+				
+			}
             console.log("ajax 이후코드");
 
 
