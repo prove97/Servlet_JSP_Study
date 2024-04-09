@@ -33,14 +33,48 @@
 		 	>> 커스텀 액션 태그(Custom Action Tag) : jsp페이지에서 바로 사용 불가능(별도의 라이브러리 연동 필요)
 		 		접두어에 jsp:가 있는 모든 태그를 제외한 모든 태그
 		 		가장 대표적이고 유용한 라이브러리 jstl
+	-->
+	
+	<h3>* 표준액션태그 (Standard Action Tag)</h3>
+	<a href="views/2_Standard_Action_Tag/01_include.jsp">01_jsp:include</a>
+	<a href="views/2_Standard_Action_Tag/02_forward.jsp">02_jsp:forward</a>
+	
+	<h3>* Custom Action Tag</h3>
+	<a href="views/3_Custom_Action_Tag/01_core.jsp">01_core</a>
+	
+	
+	<h1>JSTL이란?</h1>
+    <p>
+       JSP에서 사용되는 커스텀액션태그로 <br>
+       공통적으로 자주 사용되는 코드들을 집합하여 보다 쉽게 사용할 수 있도록 태그화하여 표준으로 제공하는 라이브러리
+    </p>
+    
+    <h3>라이브러리 추가 필요</h3>
+    1) 톰캠사이트 접속<br>
+    2) 메뉴바 Taglib 메뉴 접속<br>
+    3) 4개의 라이브러리 전부 다운로드<br>
+    4) WEB-INF/lib/() 추가<br>
+    
+    <h3> JSTL 선언방법 </h3>
+    <p>
+		JSTL을 사용하고자하는 해당 jsp페이지 상단에<br>
+		taglib 지시어를 사용해서 선언함<br>
 		
-	 -->
-	 <h3>* 표준액션태그 (Standard Action Tag)</h3>
-	 <a href="views/2_Standard_Action_Tag/01_include.jsp">01_jsp:include</a>
-	 <a href="views/2_Standard_Action_Tag/02_forward.jsp">02_jsp:forward</a>
-
-	 <h3>* Custom Action Tag</h3>
-	 <a href="views/3_Custom_Action_Tag/01_core.jsp">01_core</a>
+		&lt;%@ taglib prefix="접두어" uri="라이브러리 파일상의 uri주소" %&gt;
+    </p>
+    
+    <h3>* 커스텀액션태그(Custom Action Tag)</h3>
+    <h4>1. JSTL Core Library</h4>
+    <p>변수와 조건문, 반복문 등 로직과 관련된 문법을 제공한다.</p>
+    <a href="views/3_Custom_Action_Tag/01_core.jsp">01_core</a>
+	
+	<h4>2. JSTL Formatting Library</h4>
+	<p>숫자, 날짜 및 시간 데이터의 출력 형식을 지정할 때 사용하는 문법을 제공</p>
+	<a href="views/3_Custom_Action_Tag/02_formatting.jsp">fmt library</a>
+	
+	<h4>3. JSTL function Libray</h4>
+	<p>EL안에서 사용할 수 있는 메소드를 제공</p>
+	<a href="views/3_Custom_Action_Tag/03_fn.jsp">fn library</a>
 	
 </body>
 </html>

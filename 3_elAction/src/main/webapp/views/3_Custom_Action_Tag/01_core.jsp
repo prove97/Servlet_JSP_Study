@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.kh.model.vo.Person"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -13,11 +13,10 @@
 	
 	<h3>1. 변수(속성 == attribute)</h3>
 	<pre>
-	*변수 선언과 동시에 초기화(c:set var="변수명" value="값" [scope="저장객체"])
-	-변수 선언하고 초기값을 대입해두는 기능을 제공
-	-해당 변수를 어떤 scope에 setAttribute를 통해서 담아둘지 결정할 수 있다.
-	=> c:set으로 선언한 변수는 접근할 때 무조건! EL로 접근해야한다.
-	
+*변수 선언과 동시에 초기화(c:set var="변수명" value="값" [scope="저장객체"])
+-변수 선언하고 초기값을 대입해두는 기능을 제공
+-해당 변수를 어떤 scope에 setAttribute를 통해서 담아둘지 결정할 수 있다.
+=> c:set으로 선언한 변수는 접근할 때 무조건! EL로 접근해야한다.
 	</pre>
 	
 	<c:set var="num1" value="10" />  <!-- pageContext.setAttribute("num1", 10); -->
@@ -38,10 +37,10 @@
 	${requestScope.result } <br>
 
 	<pre>
-	* 변수삭제(c:remove var="제거하고싶은 변수명" [scope=""])
-	-해당 scope영역에 해당 변수를 찾아서 제거하는 태그
-	-scope 지정 생략시 모든 scope에서 해당 변수를 다 찾아서 제거한다.
-	=> 즉, 해당 scope에 .removeAttribute를 통해 제거하는 거라고 생각하면 됨.		
+* 변수삭제(c:remove var="제거하고싶은 변수명" [scope=""])
+-해당 scope영역에 해당 변수를 찾아서 제거하는 태그
+-scope 지정 생략시 모든 scope에서 해당 변수를 다 찾아서 제거한다.
+=> 즉, 해당 scope에 .removeAttribute를 통해 제거하는 거라고 생각하면 됨.		
 	</pre>
 	
 	삭제전 : ${result} <br><br>
@@ -57,8 +56,8 @@
 	<hr>
 	
 	<pre>
-	*변수(데이터) 출력 (c:out value="출력하고자하는값" [default="기본값"] [escapeXml="true | false"])	
-	=> 데이터를 출력하고자 할 때 사용하는 태그
+*변수(데이터) 출력 (c:out value="출력하고자하는값" [default="기본값"] [escapeXml="true | false"])	
+=> 데이터를 출력하고자 할 때 사용하는 태그
 	</pre>
 	
 	<c:out value="${result}"/> <br>
@@ -73,8 +72,8 @@
 	<h3>2. 조건문 - if(c:if test 조건식)</h3>
 	
 	<pre>
-	-JAVA의 if문과 비슷한 역할을 하는 태그
-	- 조건식은 test속성에 작성(단, El구문으로 기술해야한다.)
+-JAVA의 if문과 비슷한 역할을 하는 태그
+- 조건식은 test속성에 작성(단, El구문으로 기술해야한다.)
 	</pre>
 	
 	<c:if test="${num1 > num2}">
@@ -116,10 +115,116 @@
 		</c:otherwise>
 	</c:choose>
 	
+	<h3>4. 반복문 - forEach</h3>
+	<pre>
+for loop문 - (c:forEach var="변수명" begin="초기값" end="끝값" [step="반복시증가값"])
+향상된 for문 - (c:forEach var="변수명" items="순차적으로 접근하고자하는 객채(배열/컬렉션)" [varStatus="현재 접근된 요소의 상태값"])
+	</pre>
+	  
+	<%--
+	<%for(int i = 1; i <= 10; i+=2) {%>
+	   1 3 5 7 9
+	<%} %>
+	 --%>
+	  
+  	<c:forEach var="i" begin="1" end="10" step="2">
+  		반복확인 : ${i} <br>
+	</c:forEach>
+	  
+	<c:forEach var="i" begin="1" end="6">
+		<h${i}> 태그 안에서 사용</h${i}>
+	</c:forEach>
 	
+	<c:set var="colors">
+		red, yellow, green, pink
+	</c:set>
 	
+	color변수 : ${colors} <br>
 	
+	<ul>
+		<c:forEach var="c" items="${colors}">
+			<li style="color: ${c}">${c}</li>
+		</c:forEach>
+	</ul>
 	
+	<%
+		ArrayList<Person> list = new ArrayList<>();
+		list.add(new Person("홍길동", 18, "남자"));
+		list.add(new Person("이길등", 28, "남자"));
+		list.add(new Person("최수연", 34, "여자"));
+	%>
+	  
+ 	<table>
+ 	<thead>
+ 		<th>이름</th>
+ 		<th>나이</th>
+ 		<th>성별</th>
+ 	</thead>
+ 	<tbody>
+ 	<%--
+ 		<%if(list.isEmpty()){ %>
+ 			<tr>
+ 				<td colspan="3">조회된 사람이 없습니다.</td>
+ 			</tr>
+ 		<%} else{%>
+ 			<%for(Person p: list){ %>
+ 				<tr>
+ 					<td><%=p.getName() %></td>
+ 					<td><%=p.getAge() %></td>
+ 					<td><%=p.getGender() %></td>
+ 				</tr>
+ 			<%} %>
+ 		<%} %>
+ 	 --%>
+ 	 
+ 	 <c:set var="pList" value="<%=list %>" scope="request" />
+ 	 <c:choose>
+ 	 	<c:when test="${empty pList}">
+ 	 		<tr><td colspan="3">조회된 사람이 없습니다.ㅏ</td></tr>
+ 	 	</c:when>
+ 	 	<c:otherwise>
+ 	 		<c:forEach var="p" items="${pList}" varStatus="status">
+			<tr>
+				<td>${status.count}</td>
+				<td>${p.name}</td>
+				<td>${p.age}</td>
+				<td>${p.gender}</td>
+			</tr>
+ 	 		</c:forEach>
+ 	 	</c:otherwise>
+ 	 </c:choose>
+ 	 
+ 	</tbody>
+	  </table>
 	
+	<h3>5. 반복문 - fortokens</h3>
+	<pre>
+(c:forTokens var="변수명" items="분리하고싶은 문자열" delims="구분자")
+
+- 구분자를 통해서 분리된 각각의 문자열에 순차적으로 접근하면서 반복 수행
+- JAVA의 문자열.split("구분자")과 비슷
+	</pre>
+	
+	<c:set var="device" value="컴퓨터/노트북.핸드폰,모니터,냉장고"/>
+	<ol>
+		<c:forTokens var="d" items="${device}" delims=",./">
+			<li>${d}</li>
+		</c:forTokens>
+	</ol>
+
+	<h3>6. url 쿼리스트링</h3>
+	<pre>
+- url경로를 생성하고, 쿼리스트링을 정의해둘 수 잇는 태그
+c:url var="변수명" value="요청url"
+	c:param name="키값" value="전달할 값"
+/c:url
+	</pre>
+	
+	<a href="list.do?cpage=1&num=2">기존방식</a>
+	<c:url var="listUrl" value="list.do">
+		<c:param name="cpage" value="1"/>
+		<c:param name="num" value="2"/>
+	</c:url>
+	<a href="${listUrl}">c:url이용한 방식</a>
 </body>
 </html>
